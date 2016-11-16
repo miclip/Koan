@@ -14,7 +14,17 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+
+  raise TriangleError, "Invalid Triangle" if
+     (a+b+c == 0) || (a*b*c) < 0 || (a+b<=c || b+c<=a || a+c<=b)
+
+  if a == b && b == c && a == c
+    return :equilateral 
+  elsif a != b && b != c && a != c
+    return :scalene  
+  else
+    return :isosceles 
+  end 
 end
 
 # Error class used in part 2.  No need to change this code.
