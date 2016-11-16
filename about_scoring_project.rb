@@ -30,7 +30,24 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
-  # You need to write this method
+  # number ["single points","set of three" ]
+  scoreMatrix = {1=>[100,1000],2=>[0,200],3=>[0,300],4=>[0,400],5=>[50,500],6=>[0,600]}
+  diceTotals = Hash.new
+  
+  # count occurence of each die result
+  dice.each do |die|
+     diceTotals[die] = dice.find_all{|item| item == die }.count unless diceTotals.keys.include?(die)
+  end
+
+  # calc total score from score matrix
+  result = 0 
+  diceTotals.each do |key, count|
+    keyMatrix = scoreMatrix[key]
+    result = result + (count >= 3 ? 
+        keyMatrix[1] + ((count - 3) * keyMatrix[0]) : keyMatrix[0] * count)
+  end
+
+  return result
 end
 
 class AboutScoringProject < Neo::Koan
